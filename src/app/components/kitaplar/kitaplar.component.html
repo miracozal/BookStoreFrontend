@@ -1,0 +1,18 @@
+<div class="kitaplar-container">
+  <h1 class="kitaplar-title">Kitap Listesi</h1>
+  <button mat-raised-button color="primary" routerLink="/kitap-ekle">Kitap Ekle</button>
+  <div *ngFor="let kitap of kitaplar" class="kitap-card">
+    <mat-card>
+      <mat-card-title>{{ kitap.baslik }}</mat-card-title>
+      <mat-card-content>
+        <p>Yazar: {{ kitap.yazar }}</p>
+        <p>Yayın Yılı: {{ kitap.yayinYili }}</p>
+        <p>Fiyat: {{ kitap.fiyat | currency }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/kitap-detaylari', kitap.id]">Detaylar</button>
+        <button mat-button (click)="deleteKitap(kitap.id)">Sil</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

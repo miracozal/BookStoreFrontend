@@ -1,0 +1,12 @@
+.kitap-detay {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .yorum {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  

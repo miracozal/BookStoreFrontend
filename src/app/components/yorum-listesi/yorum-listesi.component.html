@@ -1,0 +1,9 @@
+<div *ngFor="let yorum of yorumlar" class="yorum-card">
+    <mat-card>
+      <mat-card-content>
+        <p>{{ yorum.yorumMetni }}</p>
+        <p><strong>Puan:</strong> {{ yorum.puan }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

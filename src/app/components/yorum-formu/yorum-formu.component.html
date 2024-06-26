@@ -1,0 +1,14 @@
+<form [formGroup]="yorumForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Yorum</mat-label>
+      <textarea matInput formControlName="yorumMetni" required></textarea>
+      <mat-error *ngIf="yorumForm.get('yorumMetni')?.invalid">Yorum gerekli</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Puan</mat-label>
+      <input matInput type="number" formControlName="puan" required>
+      <mat-error *ngIf="yorumForm.get('puan')?.invalid">Puan 1 ile 5 arasında olmalıdır</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Yorum Ekle</button>
+  </form>
+  

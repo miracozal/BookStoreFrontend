@@ -1,0 +1,23 @@
+<form [formGroup]="kitapForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Başlık</mat-label>
+    <input matInput formControlName="baslik" required>
+    <mat-error *ngIf="kitapForm.get('baslik')?.invalid">{{ kitapForm.get('baslik')?.errors?.['required'] ? 'Başlık gerekli' : '' }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Yazar</mat-label>
+    <input matInput formControlName="yazar" required>
+    <mat-error *ngIf="kitapForm.get('yazar')?.invalid">{{ kitapForm.get('yazar')?.errors?.['required'] ? 'Yazar gerekli' : '' }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Yayın Yılı</mat-label>
+    <input matInput formControlName="yayinYili" required>
+    <mat-error *ngIf="kitapForm.get('yayinYili')?.invalid">{{ kitapForm.get('yayinYili')?.errors?.['required'] ? 'Yayın Yılı gerekli' : '' }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Fiyat</mat-label>
+    <input matInput formControlName="fiyat" required>
+    <mat-error *ngIf="kitapForm.get('fiyat')?.invalid">{{ kitapForm.get('fiyat')?.errors?.['required'] ? 'Fiyat gerekli' : '' }}</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">{{ kitapId ? 'Güncelle' : 'Ekle' }}</button>
+</form>
