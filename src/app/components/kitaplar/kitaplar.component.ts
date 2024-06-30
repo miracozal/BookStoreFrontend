@@ -6,28 +6,91 @@ import { MatButtonModule } from '@angular/material/button';
 import { KitapService } from '../../services/kitap.service';
 import { Kitap } from '../../models/kitap';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { KitapFormuComponent } from '../kitap-formu/kitap-formu.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { KitapDetaylariComponent } from '../kitap-detaylari/kitap-detaylari.component';
 
 @Component({
   selector: 'app-kitaplar',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, HttpClientModule, MatFormFieldModule,
+    MatSelectModule],
   templateUrl: './kitaplar.component.html',
   styleUrls: ['./kitaplar.component.scss']
 })
 export class KitaplarComponent implements OnInit {
   kitaplar: Kitap[] = [];
-
-  constructor(private kitapService: KitapService) { }
+  siraKriteri: string = 'ada';
+  constructor(
+    private dialog: MatDialog,
+    private kitapService: KitapService) { }
 
   ngOnInit(): void {
     this.kitapService.getKitaplar().subscribe((data: Kitap[]) => {
       this.kitaplar = data;
     });
   }
+  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(KitapFormuComponent, {
+      width: '400px',
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.kitapService.getKitaplar().subscribe((data: Kitap[]) => {
+        this.kitaplar = data;
+      });
+    }
+  );
+  }
+
+  openInfoDialog(kitap: Kitap): void {
+    const dialogRef = this.dialog.open(KitapDetaylariComponent, {
+      width: '400px',
+      data: {kitap}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.kitapService.getKitaplar().subscribe((data: Kitap[]) => {
+        this.kitaplar = data;
+      });
+    }
+  );
+  }
 
   deleteKitap(id: number): void {
     this.kitapService.deleteKitap(id).subscribe(() => {
       this.kitaplar = this.kitaplar.filter(kitap => kitap.id !== id);
     });
+  }
+
+  onSortChange(event: any) {
+    const sortBy = event.value;
+    switch (sortBy) {
+      case 'title':
+        this.sortByTitle();
+        break;
+      case 'average':
+        this.sortByAverage();
+        break;
+      case 'price':
+        this.sortByPrice();
+        break;
+      default:
+        break;
+    }
+  }
+
+  sortByTitle() {
+    this.kitaplar.sort((a, b) => a.baslik.localeCompare(b.baslik));
+  }
+
+  sortByAverage() {
+    this.kitaplar.sort((a, b) => b.ortalamaPuan - a.ortalamaPuan);
+  }
+
+  sortByPrice() {
+    this.kitaplar.sort((a, b) => a.fiyat - b.fiyat);
   }
 }

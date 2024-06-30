@@ -4,5 +4,6 @@ export interface Kitap {
     yazar: string;
     yayinYili: number;
     fiyat: number;
+    ortalamaPuan: number
   }
   

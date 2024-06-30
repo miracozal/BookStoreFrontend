@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-kitap-formu',
@@ -29,7 +31,9 @@ export class KitapFormuComponent implements OnInit {
     private fb: FormBuilder,
     private kitapService: KitapService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<KitapFormuComponent>
   ) {
     this.kitapForm = this.fb.group({
       baslik: ['', Validators.required],
@@ -57,13 +61,27 @@ export class KitapFormuComponent implements OnInit {
     if (this.kitapForm.valid) {
       if (this.kitapId) {
         this.kitapService.updateKitap({ ...this.kitapForm.value, id: this.kitapId }).subscribe(
-          () => this.router.navigate(['/']),
+          () => {
+            this.snackBar.open('Kitap başarıyla güncellendi!', 'X', {
+              duration: 5000,
+              verticalPosition: 'top'
+            });
+            this.dialogRef.close(); 
+          },
           (error: any) => console.error('Kitap güncellenemedi', error)
         );
       } else {
         this.kitapService.addKitap(this.kitapForm.value).subscribe(
-          () => this.router.navigate(['/']),
-          (error: any) => console.error('Kitap eklenemedi', error)
+          () => {
+            this.snackBar.open('Kitap başarıyla eklendi!', 'X', {
+              duration: 5000,
+              verticalPosition: 'top'
+            });
+            this.dialogRef.close();
+          },
+          (error: any) => {
+            console.error('Kitap eklenemedi', error);
+          }
         );
       }
     }

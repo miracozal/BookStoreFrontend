@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KitapService } from '../../services/kitap.service';
 import { Kitap } from '../../models/kitap';
@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { YorumFormuComponent } from '../yorum-formu/yorum-formu.component';
 import { YorumListesiComponent } from '../yorum-listesi/yorum-listesi.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-kitap-detaylari',
@@ -27,10 +28,13 @@ export class KitapDetaylariComponent implements OnInit {
   kitap?: Kitap;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private route: ActivatedRoute,
     private router: Router,
     private kitapService: KitapService
-  ) {}
+  ) {
+    this.kitap = data.kitap; 
+  }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;

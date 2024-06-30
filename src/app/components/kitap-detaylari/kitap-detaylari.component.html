@@ -3,11 +3,13 @@
   <p><strong>Yazar:</strong> {{ kitap?.yazar }}</p>
   <p><strong>Yayın Yılı:</strong> {{ kitap?.yayinYili }}</p>
   <p><strong>Fiyat:</strong> {{ kitap?.fiyat | currency }}</p>
-  <button mat-raised-button color="primary" [routerLink]="['/kitap-duzenle', kitap?.id]">Düzenle</button>
+  <!-- <button mat-raised-button color="primary" [routerLink]="['/kitap-duzenle', kitap?.id]">Düzenle</button> -->
 </div>
-<div *ngIf="!kitap">
+<div *ngIf="!kitap" class="kitap-detaylari-container">
   <p>Kitap bilgisi bulunamadı.</p>
 </div>
 
-<app-yorum-formu></app-yorum-formu>
-<app-yorum-listesi></app-yorum-listesi>
+<div class="kitap-detaylari-container">
+  <app-yorum-formu></app-yorum-formu>
+  <app-yorum-listesi></app-yorum-listesi>
+</div>
