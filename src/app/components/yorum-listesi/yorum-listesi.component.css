@@ -1,0 +1,17 @@
+.yorum-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .yorum-content {
+    flex-grow: 1;
+    padding: 0 10px;
+  }
+  
+  p {
+    margin: 0;
+  }
+  

@@ -48,8 +48,8 @@ export class GirisComponent {
     if (this.girisForm.valid) {
       this.authService.login(this.girisForm.value).subscribe(
         (response: any) => {
-          debugger
           localStorage.setItem('token', response.token);
+          localStorage.setItem('kullaniciid', response.id);
           this.router.navigate(['/']);
         },
         (error: any) => {

@@ -16,5 +16,5 @@ export const endpoints = {
   auth: {
     login: `${apiUrl}/Login/Login`
   },
-  reviews: `${apiUrl}/Kullanici/YorumEkle`
+  reviews: `${apiUrl}/YorumlariGetir`
 };

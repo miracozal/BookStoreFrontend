@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { YorumService } from '../../services/yorum.service';
 import { ActivatedRoute } from '@angular/router';
 import { Yorum } from '../../models/yorum';
@@ -14,21 +14,24 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, MatCardModule, MatButtonModule]
 })
 export class YorumListesiComponent implements OnInit {
+  @Input() kitapId: number | undefined = 0;
   yorumlar: Yorum[] = [];
-  kitapID: number;
 
   constructor(private yorumService: YorumService, private route: ActivatedRoute) {
-    this.kitapID = +this.route.snapshot.paramMap.get('id')!;
   }
 
   ngOnInit(): void {
-    this.yorumService.getYorumlar(this.kitapID).subscribe(
-      (data: Yorum[]) => {
-        this.yorumlar = data;
-      },
-      (error: any) => {
-        console.error('Yorumlar yüklenemedi', error);
-      }
-    );
+    if (this.kitapId !== undefined) {
+      this.yorumService.getYorumlar(this.kitapId).subscribe(
+        (data: Yorum[]) => {
+          this.yorumlar = data;
+        },
+        (error: any) => {
+          console.error('Yorumlar yüklenemedi', error);
+        }
+      );
+    } else {
+      console.error('Kitap ID undefined');
+    }
   }
 }

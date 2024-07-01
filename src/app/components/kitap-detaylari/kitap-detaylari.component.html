@@ -10,6 +10,6 @@
 </div>
 
 <div class="kitap-detaylari-container">
-  <app-yorum-formu></app-yorum-formu>
-  <app-yorum-listesi></app-yorum-listesi>
+  <app-yorum-formu [kitapId]="kitap?.id"></app-yorum-formu>
+  <app-yorum-listesi [kitapId]="kitap?.id"></app-yorum-listesi>
 </div>
