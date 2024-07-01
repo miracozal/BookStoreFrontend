@@ -11,7 +11,9 @@ import { KitapFormuComponent } from '../kitap-formu/kitap-formu.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { KitapDetaylariComponent } from '../kitap-detaylari/kitap-detaylari.component';
-
+import { KitapDuzenleComponent } from '../kitap-duzenle/kitap-duzenle.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-kitaplar',
   standalone: true,
@@ -25,7 +27,8 @@ export class KitaplarComponent implements OnInit {
   siraKriteri: string = 'ada';
   constructor(
     private dialog: MatDialog,
-    private kitapService: KitapService) { }
+    private kitapService: KitapService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.kitapService.getKitaplar().subscribe((data: Kitap[]) => {
@@ -58,6 +61,23 @@ export class KitaplarComponent implements OnInit {
     }
   );
   }
+
+  openChangeDialog(kitap: Kitap): void {
+    const dialogRef = this.dialog.open(KitapDuzenleComponent, {
+      width: '400px',
+      data: {kitap}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    this.snackBar.open('Kitap başarıyla düzenlendi!', 'X', {
+      duration: 5000,
+      verticalPosition: 'top'
+    });
+    dialogRef.close();
+    this.kitapService.getKitaplar().subscribe((data: Kitap[]) => {
+      this.kitaplar = data;
+    });
+  })
+}
 
   deleteKitap(id: number): void {
     this.kitapService.deleteKitap(id).subscribe(() => {
